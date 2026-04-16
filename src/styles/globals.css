@@ -2,12 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tabbatar babu komai a saman layin farko */
 body {
-  @apply antialiased text-slate-900;
-}
-
-/* Custom styles for Jabbama */
-.italic-black {
-  font-style: italic;
-  font-weight: 900;
+  background-color: white;
+  color: black;
 }
