@@ -1,13 +1,10 @@
 @import "tailwindcss";
 
-/* Idan kana da custom styles, kana iya saka su a kasa */
-@theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-body {
-  @apply antialiased text-slate-900 bg-white;
+/* Wannan zai tabbatar styles din Jabbama sun zauna */
+@layer base {
+  body {
+    @apply antialiased text-slate-900 bg-white;
+  }
 }
 
 .italic-black {
