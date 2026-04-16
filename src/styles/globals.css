@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Tabbatar babu komai a saman layin farko */
 body {
   background-color: white;
   color: black;
