@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { db } from "@/lib/firebase";
+import { db } from "../lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 export default function FlightBookingForm() {
