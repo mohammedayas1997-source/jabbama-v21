@@ -4,9 +4,10 @@ import React, { useState } from "react";
 // Direct Relative Paths - Gyararru don Vercel
 import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
-import InternationalApplicationForm from "../components/InternationalApplicationForm";
-import FlightBookingForm from "../components/FlightBookingForm";
-import StudyAbroadPortal from "../components/StudyAbroadPortal";
+import ApplicationForm from "@/components/ApplicationForm";
+// A cikin src/app/page.js
+import FlightBookingForm from "@/components/FlightBookingForm";
+import StudyAbroadPortal from "@/components/StudyAbroadPortal";
 
 export default function Home() {
   // Muna amfani da useState don nuna Requirements Modal
@@ -283,7 +284,7 @@ export default function Home() {
               Start Your Official Journey Here
             </p>
           </div>
-          <InternationalApplicationForm />
+          <ApplicationForm />
         </div>
       </section>
 
