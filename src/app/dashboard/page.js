@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Navbar from "../../components/Navbar";
 
@@ -12,17 +13,17 @@ export default function Dashboard() {
               Client Portal
             </h2>
             <p className="opacity-70 font-bold">
-              Duba matsayin takardunka anan
+              Track your application status and documents
             </p>
           </div>
           <div className="p-8">
             <div className="border-2 border-dashed border-gray-200 rounded-2xl p-10 text-center">
               <p className="text-gray-400 font-bold mb-4 uppercase italic">
-                Saka lambar fasfo ko ID dinka
+                Enter your Passport Number or Application ID
               </p>
               <input
                 type="text"
-                placeholder="Misali: A01234567"
+                placeholder="Example: A01234567"
                 className="w-full max-w-md border-2 border-blue-900 p-4 rounded-xl mb-6 text-center text-xl font-bold uppercase focus:outline-none focus:ring-4 focus:ring-orange-100"
               />
               <button className="w-full max-w-md bg-orange-500 text-white py-4 rounded-xl font-black text-lg hover:bg-orange-600 shadow-xl transition">

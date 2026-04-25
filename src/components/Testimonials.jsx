@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 const reviews = [
@@ -6,21 +7,21 @@ const reviews = [
     location: "UK (Healthcare)",
     text: "Jabbama Travels made my dream of working in the UK a reality. Their process was transparent and fast!",
     image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200",
+      "https://images.unsplash.com/photo-1618588507085-c79565432917?q=80&w=200&h=200&fit=crop", // Hoton namiji sanye da hula (African/Northern style)
   },
   {
     name: "Fatima Yusuf",
     location: "Canada (Student)",
     text: "Highly professional service. They handled my study permit with so much care. I'm now in Toronto!",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9ce29b2933?q=80&w=200",
+      "https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?q=80&w=200&h=200&fit=crop", // Hoton mace sanye da Hijabi
   },
   {
     name: "Abba Kyari",
     location: "Japan (Technical)",
     text: "The best travel agency in Kano. My visa to Japan was processed without any stress. Highly recommended!",
     image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200",
+      "https://images.unsplash.com/photo-1531384441138-2736e62e0919?q=80&w=200&h=200&fit=crop", // Hoton namiji (African context)
   },
 ];
 
