@@ -1,6 +1,7 @@
 ﻿"use client";
 import React, { useState } from "react";
 // Direct Relative Paths
+import { db } from "../lib/firebase";
 import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
 import InternationalApplicationForm from "../components/InternationalApplicationForm";
