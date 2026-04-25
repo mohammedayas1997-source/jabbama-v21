@@ -5,13 +5,12 @@ import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
 import ApplicationForm from "@/components/ApplicationForm";
-// A cikin src/app/page.js
 import FlightBookingForm from "@/components/FlightBookingForm";
 import StudyAbroadPortal from "@/components/StudyAbroadPortal";
 
 export default function Home() {
-  // Muna amfani da useState don nuna Requirements Modal
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [isAppModalOpen, setIsAppModalOpen] = useState(false);
 
   const countries = [
     {
@@ -104,36 +103,112 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 font-sans">
       <Navbar />
 
-      {/* --- 2. HERO SECTION --- */}
-      <header className="relative h-[85vh] flex items-center justify-center bg-blue-900 overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 z-10"></div>
-        <img
-          src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2000"
-          alt="Travel"
-          className="absolute inset-0 w-full h-full object-cover opacity-60"
-        />
+      {/* --- 2. HERO SECTION (GYARARRE) --- */}
+      <header className="relative min-h-[90vh] flex items-center bg-white overflow-hidden py-20 px-8">
+        <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* TEXT CONTENT - Left Aligned */}
+          <div className="relative z-20 text-left space-y-8">
+            <div className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full font-black text-xs tracking-widest uppercase">
+              Official Travel Partner
+            </div>
+            <h1 className="text-6xl md:text-8xl font-black italic text-blue-900 leading-[0.9] drop-shadow-sm">
+              JABBAMA <br />
+              <span className="text-orange-500 not-italic">TRAVELS</span>
+            </h1>
+            <h2 className="text-xl md:text-2xl font-bold tracking-[0.2em] text-slate-400 uppercase border-l-4 border-orange-500 pl-4">
+              Travels and Tours Limited
+            </h2>
+            <p className="text-lg md:text-xl font-medium text-slate-600 max-w-xl leading-relaxed">
+              Your gateway to the world. We provide professional visa
+              assistance, work permits, and global travel solutions with
+              integrity.
+            </p>
+            <div className="flex flex-wrap gap-4 pt-4">
+              <button
+                onClick={() => setIsAppModalOpen(true)}
+                className="bg-blue-900 hover:bg-orange-600 text-white px-10 py-5 rounded-2xl font-black text-lg transition-all hover:scale-105 shadow-2xl flex items-center gap-3"
+              >
+                START APPLICATION <span>→</span>
+              </button>
+              <button className="bg-slate-100 text-blue-900 px-10 py-5 rounded-2xl font-black text-lg hover:bg-blue-900 hover:text-white transition-all">
+                OUR SERVICES
+              </button>
+            </div>
+          </div>
 
-        <div className="relative z-20 text-center text-white px-6 max-w-4xl">
-          <h1 className="text-5xl md:text-8xl font-black italic mb-4 drop-shadow-2xl">
-            JABBAMA <span className="text-orange-500 italic">TRAVELS</span>
-          </h1>
-          <h2 className="text-xl md:text-3xl font-bold tracking-[0.4em] mb-8 border-y-2 border-white/30 py-4 uppercase">
-            Travels and Tours Limited
-          </h2>
-          <p className="text-lg md:text-xl font-medium mb-10 opacity-90 max-w-2xl mx-auto">
-            Your gateway to the world. We provide professional visa assistance,
-            work permits, and global travel solutions with integrity.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-md font-black text-lg transition-transform hover:scale-105 shadow-xl">
-              START APPLICATION
-            </button>
-            <button className="bg-white/10 backdrop-blur-md border-2 border-white text-white px-10 py-4 rounded-md font-black text-lg hover:bg-white hover:text-blue-900 transition-all">
-              OUR SERVICES
-            </button>
+          {/* IMAGE GRID - 5 Images from Public Folder */}
+          <div className="relative grid grid-cols-12 grid-rows-6 gap-4 h-[600px]">
+            {/* Main Image */}
+            <div className="col-span-7 row-span-6 rounded-[40px] overflow-hidden shadow-2xl border-4 border-white">
+              <img
+                src="/hero1.jpg"
+                alt="Hero 1"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Top Right */}
+            <div className="col-span-5 row-span-3 rounded-[30px] overflow-hidden shadow-xl border-4 border-white">
+              <img
+                src="/hero2.jpg"
+                alt="Hero 2"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Bottom Right 1 */}
+            <div className="col-span-2 row-span-3 rounded-[20px] overflow-hidden shadow-lg border-4 border-white">
+              <img
+                src="/hero3.jpg"
+                alt="Hero 3"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Bottom Right 2 */}
+            <div className="col-span-3 row-span-3 rounded-[20px] overflow-hidden shadow-lg border-4 border-white">
+              <div className="grid grid-rows-2 gap-4 h-full">
+                <div className="rounded-[15px] overflow-hidden h-full">
+                  <img
+                    src="/hero4.jpg"
+                    alt="Hero 4"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="rounded-[15px] overflow-hidden h-full">
+                  <img
+                    src="/hero5.jpg"
+                    alt="Hero 5"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </header>
+
+      {/* APPLICATION MODAL */}
+      {isAppModalOpen && (
+        <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-blue-950/90 backdrop-blur-md">
+          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[40px] p-2 relative">
+            <button
+              onClick={() => setIsAppModalOpen(false)}
+              className="absolute top-6 right-8 z-50 bg-red-600 text-white w-12 h-12 rounded-full font-black shadow-lg"
+            >
+              ✕
+            </button>
+            <div className="p-4">
+              <div className="text-center mb-8 pt-6">
+                <h2 className="text-3xl font-black text-blue-900 uppercase">
+                  State Application Form
+                </h2>
+                <p className="text-orange-600 font-bold">
+                  Please fill in your details correctly
+                </p>
+              </div>
+              <ApplicationForm />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* --- 3. SERVICES PREVIEW --- */}
       <section className="py-24 px-8 container mx-auto">
@@ -274,7 +349,7 @@ export default function Home() {
       <Testimonials />
 
       {/* --- 7. OFFICIAL PORTAL SECTION --- */}
-      <section className="py-24 bg-white">
+      <section id="portal" className="py-24 bg-white">
         <div className="container mx-auto px-8">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-black text-blue-900 uppercase italic">
