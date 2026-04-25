@@ -1,3 +1,4 @@
+"use client"; // Wannan layin shine zai hana kuskuren build din
 import React from "react";
 
 export default function Navbar() {
