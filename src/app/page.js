@@ -1,10 +1,11 @@
 ﻿"use client";
 import React, { useState } from "react";
-import Navbar from "@/components/Navbar";
-import Testimonials from "@/components/Testimonials";
-import InternationalApplicationForm from "@/components/InternationalApplicationForm";
-import FlightBookingForm from "@/components/FlightBookingForm";
-import StudyAbroadPortal from "@/components/StudyAbroadPortal";
+// Direct Relative Paths
+import Navbar from "../components/Navbar";
+import Testimonials from "../components/Testimonials";
+import InternationalApplicationForm from "../components/InternationalApplicationForm";
+import FlightBookingForm from "../components/FlightBookingForm";
+import StudyAbroadPortal from "../components/StudyAbroadPortal";
 
 export default function Home() {
   const countries = [
