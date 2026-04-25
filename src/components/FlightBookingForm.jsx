@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { db } from "../lib/firebase";
+import { db } from "@/lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 export default function FlightBookingForm() {
@@ -229,6 +229,7 @@ export default function FlightBookingForm() {
                 name="returnDate"
                 onChange={handleChange}
                 className="p-3 border-b-2 border-gray-300 outline-none focus:border-blue-900 font-bold"
+                required={bookingData.tripType === "round-trip"}
               />
             </div>
           )}
@@ -261,7 +262,7 @@ export default function FlightBookingForm() {
               type="number"
               name="adults"
               min="1"
-              defaultValue="1"
+              value={bookingData.adults}
               onChange={handleChange}
               className="w-12 bg-transparent border-b-2 border-blue-900 text-center font-bold"
             />
@@ -274,7 +275,7 @@ export default function FlightBookingForm() {
               type="number"
               name="children"
               min="0"
-              defaultValue="0"
+              value={bookingData.children}
               onChange={handleChange}
               className="w-12 bg-transparent border-b-2 border-blue-900 text-center font-bold"
             />

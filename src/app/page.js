@@ -1,15 +1,17 @@
 ﻿"use client";
 import React, { useState } from "react";
-// Direct Relative Paths
-import { db } from "../lib/firebase";
+
+// Direct Relative Paths - Gyararru don Vercel
+import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
 import InternationalApplicationForm from "../components/InternationalApplicationForm";
-// Line 4 & 5
 import FlightBookingForm from "../components/FlightBookingForm";
 import StudyAbroadPortal from "../components/StudyAbroadPortal";
-import Navbar from "../components/Navbar";
 
 export default function Home() {
+  // Muna amfani da useState don nuna Requirements Modal
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
   const countries = [
     {
       name: "UNITED KINGDOM",
@@ -100,34 +102,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
       <Navbar />
-      {/* --- 1. NAVIGATION BAR --- */}
-      <nav className="bg-white border-b-2 border-orange-500 py-4 px-8 flex justify-between items-center sticky top-0 z-50 shadow-md">
-        <div className="flex items-center space-x-2">
-          <div className="bg-blue-900 text-white w-10 h-10 flex items-center justify-center rounded-lg font-black italic">
-            J
-          </div>
-          <span className="text-2xl font-black text-blue-900 italic tracking-tighter">
-            JABBAMA TRAVELS
-          </span>
-        </div>
-        <div className="hidden md:flex space-x-8 font-bold text-blue-900 text-sm">
-          <a href="/" className="hover:text-orange-500">
-            HOME
-          </a>
-          <a href="/jobs" className="hover:text-orange-500">
-            JOBS ABROAD
-          </a>
-          <a href="/services" className="hover:text-orange-500">
-            SERVICES
-          </a>
-          <a href="/contact" className="hover:text-orange-500">
-            CONTACT
-          </a>
-        </div>
-        <button className="bg-blue-900 text-white px-6 py-2 rounded-full font-bold text-xs hover:bg-orange-600 transition-all">
-          CLIENT LOGIN
-        </button>
-      </nav>
 
       {/* --- 2. HERO SECTION --- */}
       <header className="relative h-[85vh] flex items-center justify-center bg-blue-900 overflow-hidden">
@@ -247,7 +221,7 @@ export default function Home() {
                     {c.desc}
                   </p>
                   <button
-                    onClick={() => setSelectedCountry(c)} // Logic to set the country
+                    onClick={() => setSelectedCountry(c)}
                     className="bg-white text-blue-900 font-black text-xs px-6 py-3 rounded-full uppercase tracking-tighter hover:bg-orange-500 hover:text-white transition shadow-xl"
                   >
                     View Requirements
@@ -294,6 +268,7 @@ export default function Home() {
           </div>
         )}
       </section>
+
       {/* --- 6. TESTIMONIALS --- */}
       <Testimonials />
 

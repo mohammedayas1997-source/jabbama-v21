@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import { db, storage } from "@/lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-// Line 7 & 8 - Note the double dots to exit /apply AND /app
+
+// Line 7 - Note the double dots to exit /apply AND /app
 import Navbar from "../../components/Navbar";
-import InternationalApplicationForm from "../../components/InternationalApplicationForm";
-export default function InternationalApplicationForm() {
+
+export default function ApplyPortal() {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState({
     passport: null,
@@ -184,6 +185,7 @@ export default function InternationalApplicationForm() {
               <input
                 type="text"
                 name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
                 className="w-full border-b-2 border-slate-300 focus:border-blue-900 outline-none p-1 font-bold"
                 required
@@ -435,68 +437,6 @@ export default function InternationalApplicationForm() {
           </div>
         </section>
 
-        {/* SECTION D: LANGUAGE & SKILLS */}
-        <section>
-          <div className="bg-blue-900 text-white p-2 font-black uppercase flex items-center gap-2 mb-4">
-            <span>🗣️</span> Section D: Language & Skills
-          </div>
-          <div className="px-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="flex flex-col gap-2">
-              <span className="font-bold text-xs uppercase">
-                English Proficiency:
-              </span>
-              <div className="flex gap-4">
-                {["Native/Fluent", "Intermediate", "Basic"].map((lvl) => (
-                  <label
-                    key={lvl}
-                    className="flex items-center gap-2 text-[11px] font-bold"
-                  >
-                    <input
-                      type="radio"
-                      name="englishProficiency"
-                      value={lvl}
-                      onChange={handleChange}
-                    />{" "}
-                    {lvl}
-                  </label>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-2">
-              <span className="font-bold text-xs uppercase">
-                IELTS/TOEFL/OET Taken?
-              </span>
-              <div className="flex gap-4">
-                <label className="flex items-center gap-2 text-[11px] font-bold">
-                  <input
-                    type="radio"
-                    name="ieltsTaken"
-                    value="Yes"
-                    onChange={handleChange}
-                  />{" "}
-                  Yes
-                </label>
-                <label className="flex items-center gap-2 text-[11px] font-bold">
-                  <input
-                    type="radio"
-                    name="ieltsTaken"
-                    value="No"
-                    onChange={handleChange}
-                  />{" "}
-                  No
-                </label>
-                <input
-                  type="text"
-                  name="ieltsScore"
-                  placeholder="Score"
-                  onChange={handleChange}
-                  className="border-b border-slate-300 w-16 text-center"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* SECTION E: DOCUMENT UPLOAD */}
         <section>
           <div className="bg-blue-900 text-white p-2 font-black uppercase flex items-center gap-2 mb-4">
@@ -543,14 +483,15 @@ export default function InternationalApplicationForm() {
             I,{" "}
             <input
               type="text"
+              name="fullName"
+              value={formData.fullName}
+              readOnly
               className="bg-transparent border-b border-black w-48 outline-none text-[10px] font-bold text-center px-1"
-              placeholder="ENTER FULL NAME"
+              placeholder="YOUR FULL NAME"
             />
             , hereby certify that all information provided is true. I understand
             that any false declaration may lead to automatic disqualification
-            without a refund. I also authorize JABBAMA TRAVELS AND TOURS to
-            process my data for the purpose of job placement and visa
-            application.
+            without a refund.
           </p>
         </section>
 
@@ -566,25 +507,6 @@ export default function InternationalApplicationForm() {
               : "Submit Official Application"}
           </button>
         </div>
-
-        {/* FOOTER CONTACT */}
-        <footer className="grid grid-cols-1 md:grid-cols-2 gap-4 text-[11px] font-bold pt-4 text-slate-600 uppercase">
-          <div className="flex items-center gap-2">
-            <span className="text-blue-900 text-lg">📍</span>
-            <span>
-              Block C 14/15 Yan Musa Plaza, Ring Road, Kano State, Nigeria.
-            </span>
-          </div>
-          <div className="flex flex-col md:items-end">
-            <div className="flex items-center gap-2">
-              <span className="text-blue-900">📞</span> 09022064702 /
-              07047497491
-            </div>
-            <div className="text-orange-600 font-black italic">
-              www.jabbamatravels.com
-            </div>
-          </div>
-        </footer>
       </form>
     </div>
   );
