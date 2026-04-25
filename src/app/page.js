@@ -2,12 +2,12 @@
 import React, { useState } from "react";
 // Direct Relative Paths
 import { db } from "../lib/firebase";
-import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
 import InternationalApplicationForm from "../components/InternationalApplicationForm";
 // Line 4 & 5
 import FlightBookingForm from "../components/FlightBookingForm";
 import StudyAbroadPortal from "../components/StudyAbroadPortal";
+import Navbar from "../components/Navbar";
 
 export default function Home() {
   const countries = [

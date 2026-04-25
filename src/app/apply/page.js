@@ -6,7 +6,6 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 // Line 7 & 8 - Note the double dots to exit /apply AND /app
 import Navbar from "../../components/Navbar";
 import InternationalApplicationForm from "../../components/InternationalApplicationForm";
-
 export default function InternationalApplicationForm() {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState({
