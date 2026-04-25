@@ -6,7 +6,7 @@ import { collection, addDoc } from "firebase/firestore";
 export default function FlightBookingForm() {
   const [loading, setLoading] = useState(false);
   const [bookingData, setBookingData] = useState({
-    passengerName: "Abdulrahman Mohammed", // Set as default per your request
+    passengerName: "", // An bar shi a sarari don mai amfani ya rubuta
     tripType: "one-way",
     departureState: "",
     arrivalState: "",
@@ -59,6 +59,8 @@ export default function FlightBookingForm() {
   ];
 
   const airlines = [
+    { name: "Binani Air", hubs: "Kano, Abuja, Lagos, Yola" },
+    { name: "NG Eagle", hubs: "Lagos, Abuja, Port Harcourt" },
     { name: "Air Peace", hubs: "Lagos, Abuja, Kano, Enugu, Port Harcourt" },
     { name: "Arik Air", hubs: "Lagos, Abuja, Benin City, Jos" },
     { name: "Max Air", hubs: "Kano, Abuja, Lagos, Katsina, Maiduguri" },
@@ -77,14 +79,26 @@ export default function FlightBookingForm() {
 
   const handleBooking = async (e) => {
     e.preventDefault();
+    if (!bookingData.passengerName) {
+      alert("Please enter passenger name.");
+      return;
+    }
     setLoading(true);
     try {
       await addDoc(collection(db, "flight_bookings"), {
         ...bookingData,
         bookedAt: new Date(),
-        status: "Confirmed",
+        status: "Pending", // An sauya zuwa Pending don real-life verification
       });
       alert("Flight Booking Request Submitted Successfully!");
+      // Reset form bayan an gama
+      setBookingData({
+        ...bookingData,
+        passengerName: "",
+        departureState: "",
+        arrivalState: "",
+        airline: "",
+      });
     } catch (error) {
       console.error("Booking Error:", error);
       alert("Error processing booking.");
@@ -126,17 +140,19 @@ export default function FlightBookingForm() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* PASSENGER NAME */}
+          {/* PASSENGER NAME - Gyararre don Real Life */}
           <div className="lg:col-span-3 bg-blue-50 p-4 rounded-lg border border-blue-100">
             <label className="block text-xs font-black text-blue-900 uppercase mb-2">
-              Lead Passenger Name
+              Full Passenger Name (As on Passport/ID)
             </label>
             <input
               type="text"
               name="passengerName"
+              placeholder="Enter your full name"
               value={bookingData.passengerName}
-              readOnly
-              className="w-full bg-transparent border-b-2 border-blue-900 text-xl font-bold outline-none text-blue-800"
+              onChange={handleChange}
+              className="w-full bg-transparent border-b-2 border-blue-900 text-xl font-bold outline-none text-blue-800 placeholder:text-blue-200"
+              required
             />
           </div>
 
@@ -147,6 +163,7 @@ export default function FlightBookingForm() {
             </label>
             <select
               name="departureState"
+              value={bookingData.departureState}
               onChange={handleChange}
               className="p-3 bg-gray-50 border-2 border-transparent border-b-blue-900 focus:bg-white outline-none font-bold"
               required
@@ -167,6 +184,7 @@ export default function FlightBookingForm() {
             </label>
             <select
               name="arrivalState"
+              value={bookingData.arrivalState}
               onChange={handleChange}
               className="p-3 bg-gray-50 border-2 border-transparent border-b-orange-500 focus:bg-white outline-none font-bold"
               required
@@ -180,13 +198,14 @@ export default function FlightBookingForm() {
             </select>
           </div>
 
-          {/* AIRLINE PREFERENCE */}
+          {/* AIRLINE PREFERENCE - Updated with Binani & NG Eagle */}
           <div className="flex flex-col">
             <label className="text-xs font-black text-slate-500 uppercase mb-1">
               Preferred Airline
             </label>
             <select
               name="airline"
+              value={bookingData.airline}
               onChange={handleChange}
               className="p-3 bg-gray-50 border-2 border-transparent border-b-blue-900 outline-none font-bold text-blue-900"
               required

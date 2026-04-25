@@ -7,15 +7,13 @@ export default function Navbar() {
       {/* LOGO SECTION */}
       <div className="flex items-center space-x-3">
         {/* Wannan shine wurin Logo dinka */}
-        <div className="h-12 w-12 flex items-center justify-center overflow-hidden">
+        <div className="h-14 w-14 flex items-center justify-center overflow-hidden">
           <img
             src="/logo.png"
             alt="Jabbama Travels Logo"
-            className="h-full w-full object-contain"
-            // Idan baka sa hoton ba tukunna, zai nuna sunan kamfanin
-            onError={(e) => {
-              e.target.style.display = "none";
-            }}
+            className="w-full h-full object-contain"
+            // Na cire onError din tukunna domin mu tabbatar hoton yana nunawa
+            // Idan hoton bai fito ba, duba sunan file din a public folder (dole ya zama logo.png)
           />
         </div>
 

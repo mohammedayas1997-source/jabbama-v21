@@ -10,11 +10,13 @@ import Navbar from "../../components/Navbar";
 export default function ApplyPortal() {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState({
-    passport: null,
+    passport: null, // International Passport
+    passportPhoto: null, // Hoton Passport (Face)
     cv: null,
     certificate: null,
     referenceLetter: null,
     policeClearance: null,
+    others: null, // Sauran takardu
   });
 
   const [formData, setFormData] = useState({
@@ -64,7 +66,12 @@ export default function ApplyPortal() {
     e.preventDefault();
     setLoading(true);
     try {
-      const passportUrl = await uploadFile(files.passport, "passport");
+      // Fara tura takardu zuwa Storage
+      const passportUrl = await uploadFile(files.passport, "intl_passport");
+      const passportPhotoUrl = await uploadFile(
+        files.passportPhoto,
+        "passport_photo",
+      );
       const cvUrl = await uploadFile(files.cv, "cv");
       const certUrl = await uploadFile(files.certificate, "certificate");
       const refUrl = await uploadFile(files.referenceLetter, "reference");
@@ -72,23 +79,29 @@ export default function ApplyPortal() {
         files.policeClearance,
         "police_clearance",
       );
+      const othersUrl = await uploadFile(files.others, "other_documents");
 
+      // Tura dukkan bayanai zuwa Firestore
       await addDoc(collection(db, "applications"), {
         ...formData,
         documents: {
-          passportPhoto: passportUrl,
+          internationalPassport: passportUrl,
+          passportPhoto: passportPhotoUrl,
           professionalCV: cvUrl,
           academicCertificate: certUrl,
           referenceLetter: refUrl,
           policeClearance: policeUrl,
+          otherDocuments: othersUrl,
         },
         submittedAt: new Date(),
         status: "Pending",
       });
+
       alert("Application and Documents Submitted Successfully!");
+      e.target.reset();
     } catch (error) {
       console.error("Error submitting application: ", error);
-      alert("Submission failed. Please check console.");
+      alert("Submission failed. Please check connection or console.");
     }
     setLoading(false);
   };
@@ -437,27 +450,32 @@ export default function ApplyPortal() {
           </div>
         </section>
 
-        {/* SECTION E: DOCUMENT UPLOAD */}
+        {/* SECTION E: DOCUMENT UPLOAD (GYARARRE) */}
         <section>
           <div className="bg-blue-900 text-white p-2 font-black uppercase flex items-center gap-2 mb-4">
-            <span>📂</span> Section E: Document Upload (PDF/Images)
+            <span>📂</span> Section E: Document Upload (Official Copies)
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 border-2 border-dashed border-slate-300">
             {[
               {
-                label: "Valid International Passport (Scanned)",
+                label: "Full International Passport (Data Page)",
                 name: "passport",
               },
-              { label: "Updated Professional CV (Intl Format)", name: "cv" },
               {
-                label: "Academic Certificates (Verified Copies)",
-                name: "certificate",
+                label: "Passport Photograph (White Background)",
+                name: "passportPhoto",
               },
+              { label: "Updated CV (International Format)", name: "cv" },
+              { label: "Academic Certificates/Diplomas", name: "certificate" },
               {
-                label: "Work Experience/Reference Letters",
+                label: "Reference Letters / Work Experience",
                 name: "referenceLetter",
               },
-              { label: "Police Character Clearance", name: "policeClearance" },
+              {
+                label: "Police Clearance Certificate",
+                name: "policeClearance",
+              },
+              { label: "Other Supporting Documents", name: "others" },
             ].map((doc) => (
               <div key={doc.name}>
                 <label className="block text-[11px] font-black text-slate-700 uppercase mb-2">
@@ -467,7 +485,7 @@ export default function ApplyPortal() {
                   type="file"
                   name={doc.name}
                   onChange={handleFileChange}
-                  className="w-full text-[10px] file:mr-4 file:py-1 file:px-4 file:rounded-sm file:border-0 file:text-[10px] file:font-black file:bg-blue-900 file:text-white hover:file:bg-orange-600"
+                  className="w-full text-[10px] file:mr-4 file:py-1 file:px-4 file:rounded-sm file:border-0 file:text-[10px] file:font-black file:bg-blue-900 file:text-white hover:file:bg-orange-600 cursor-pointer"
                 />
               </div>
             ))}
@@ -483,7 +501,6 @@ export default function ApplyPortal() {
             I,{" "}
             <input
               type="text"
-              name="fullName"
               value={formData.fullName}
               readOnly
               className="bg-transparent border-b border-black w-48 outline-none text-[10px] font-bold text-center px-1"
@@ -503,7 +520,7 @@ export default function ApplyPortal() {
             className={`w-full py-5 rounded-sm font-black text-xl uppercase tracking-widest transition-all shadow-xl ${loading ? "bg-slate-400 cursor-not-allowed" : "bg-orange-600 text-white hover:bg-blue-900"}`}
           >
             {loading
-              ? "Processing Submission..."
+              ? "Uploading Documents & Submitting..."
               : "Submit Official Application"}
           </button>
         </div>

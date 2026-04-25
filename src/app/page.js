@@ -1,16 +1,37 @@
 ﻿"use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Direct Relative Paths - Gyararru don Vercel
 import Navbar from "../components/Navbar";
 import Testimonials from "../components/Testimonials";
-import ApplicationForm from "@/components/ApplicationForm";
 import FlightBookingForm from "@/components/FlightBookingForm";
 import StudyAbroadPortal from "@/components/StudyAbroadPortal";
+// Muna amfani da sabon ApplicationForm dinka mai loda takardu da biyan kudi
+import ApplicationForm from "@/components/ApplicationForm";
 
 export default function Home() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isAppModalOpen, setIsAppModalOpen] = useState(false);
+
+  // State don sarrafa slider na hotunan Hero
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+
+  // Jerin hotunanka dake cikin public/assets/
+  const heroImages = [
+    "/assets/hero1.jpg",
+    "/assets/hero2.jpg",
+    "/assets/hero3.jpg",
+    "/assets/hero4.jpg",
+    "/assets/hero5.jpg",
+  ];
+
+  // Logic na canja hoto duk bayan sakan 5
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [heroImages.length]);
 
   const countries = [
     {
@@ -103,10 +124,9 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 font-sans">
       <Navbar />
 
-      {/* --- 2. HERO SECTION (GYARARRE) --- */}
+      {/* --- 2. HERO SECTION --- */}
       <header className="relative min-h-[90vh] flex items-center bg-white overflow-hidden py-20 px-8">
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* TEXT CONTENT - Left Aligned */}
           <div className="relative z-20 text-left space-y-8">
             <div className="inline-block bg-orange-100 text-orange-600 px-4 py-2 rounded-full font-black text-xs tracking-widest uppercase">
               Official Travel Partner
@@ -136,81 +156,56 @@ export default function Home() {
             </div>
           </div>
 
-          {/* IMAGE GRID - 5 Images from Public Folder */}
-          <div className="relative grid grid-cols-12 grid-rows-6 gap-4 h-[600px]">
-            {/* Main Image */}
-            <div className="col-span-7 row-span-6 rounded-[40px] overflow-hidden shadow-2xl border-4 border-white">
-              <img
-                src="/hero1.jpg"
-                alt="Hero 1"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Top Right */}
-            <div className="col-span-5 row-span-3 rounded-[30px] overflow-hidden shadow-xl border-4 border-white">
-              <img
-                src="/hero2.jpg"
-                alt="Hero 2"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Bottom Right 1 */}
-            <div className="col-span-2 row-span-3 rounded-[20px] overflow-hidden shadow-lg border-4 border-white">
-              <img
-                src="/hero3.jpg"
-                alt="Hero 3"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Bottom Right 2 */}
-            <div className="col-span-3 row-span-3 rounded-[20px] overflow-hidden shadow-lg border-4 border-white">
-              <div className="grid grid-rows-2 gap-4 h-full">
-                <div className="rounded-[15px] overflow-hidden h-full">
-                  <img
-                    src="/hero4.jpg"
-                    alt="Hero 4"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="rounded-[15px] overflow-hidden h-full">
-                  <img
-                    src="/hero5.jpg"
-                    alt="Hero 5"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+          {/* IMAGE SLIDER */}
+          <div className="relative h-[600px] w-full rounded-[40px] overflow-hidden shadow-2xl border-4 border-white group">
+            {heroImages.map((img, idx) => (
+              <div
+                key={idx}
+                className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+                  idx === currentHeroIndex
+                    ? "opacity-100 scale-105"
+                    : "opacity-0"
+                }`}
+              >
+                <img
+                  src={img}
+                  alt={`Travel destination ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
               </div>
+            ))}
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+              {heroImages.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-2 rounded-full transition-all duration-300 ${idx === currentHeroIndex ? "w-8 bg-orange-500" : "w-2 bg-white/50"}`}
+                ></div>
+              ))}
             </div>
           </div>
         </div>
       </header>
 
-      {/* APPLICATION MODAL */}
+      {/* APPLICATION MODAL - Yanzu yana dauke da Full Registration Form dinka */}
       {isAppModalOpen && (
         <div className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-blue-950/90 backdrop-blur-md">
-          <div className="bg-white w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-[40px] p-2 relative">
+          <div className="bg-white w-full max-w-5xl max-h-[95vh] overflow-y-auto rounded-[40px] relative shadow-2xl">
             <button
               onClick={() => setIsAppModalOpen(false)}
-              className="absolute top-6 right-8 z-50 bg-red-600 text-white w-12 h-12 rounded-full font-black shadow-lg"
+              className="absolute top-6 right-8 z-[200] bg-red-600 text-white w-12 h-12 rounded-full font-black shadow-lg hover:scale-110 transition-transform"
             >
               ✕
             </button>
-            <div className="p-4">
-              <div className="text-center mb-8 pt-6">
-                <h2 className="text-3xl font-black text-blue-900 uppercase">
-                  State Application Form
-                </h2>
-                <p className="text-orange-600 font-bold">
-                  Please fill in your details correctly
-                </p>
-              </div>
+            <div className="p-2 md:p-8">
+              {/* Mun saka ApplicationForm dinka a nan */}
               <ApplicationForm />
             </div>
           </div>
         </div>
       )}
 
-      {/* --- 3. SERVICES PREVIEW --- */}
+      {/* --- SERVICES PREVIEW --- */}
       <section className="py-24 px-8 container mx-auto">
         <div className="text-center mb-16">
           <h3 className="text-4xl font-black text-blue-900 uppercase italic">
@@ -218,7 +213,6 @@ export default function Home() {
           </h3>
           <div className="w-20 h-2 bg-orange-500 mx-auto mt-4 rounded-full"></div>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {[
             { title: "Flight Bookings", icon: "✈️" },
@@ -239,7 +233,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- 4. FLIGHT BOOKING SECTION --- */}
+      {/* --- FLIGHT BOOKING SECTION --- */}
       <section className="py-24 bg-gray-100 px-8">
         <div className="container mx-auto">
           <div className="text-center mb-12">
@@ -254,12 +248,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW STUDY ABROAD SECTION */}
+      {/* STUDY ABROAD SECTION */}
       <section id="study-abroad" className="py-12 bg-white">
         <StudyAbroadPortal />
       </section>
 
-      {/* --- 5. JOBS ABROAD SECTION --- */}
+      {/* --- JOBS ABROAD SECTION --- */}
       <section className="py-24 bg-blue-900 px-8 relative">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16">
@@ -272,7 +266,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
             {countries.map((c, idx) => (
               <div
@@ -336,7 +329,7 @@ export default function Home() {
               </ul>
               <button
                 onClick={() => setSelectedCountry(null)}
-                className="w-full mt-10 bg-blue-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-orange-600 transition shadow-lg"
+                className="w-full mt-10 bg-blue-900 text-white py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-orange-600 transition"
               >
                 Close Requirements
               </button>
@@ -345,25 +338,28 @@ export default function Home() {
         )}
       </section>
 
-      {/* --- 6. TESTIMONIALS --- */}
+      {/* --- TESTIMONIALS --- */}
       <Testimonials />
 
-      {/* --- 7. OFFICIAL PORTAL SECTION --- */}
+      {/* --- OFFICIAL PORTAL SECTION (FULL FORM) --- */}
       <section id="portal" className="py-24 bg-white">
-        <div className="container mx-auto px-8">
+        <div className="container mx-auto px-4 md:px-8">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-black text-blue-900 uppercase italic">
               Application Portal
             </h2>
             <p className="text-orange-600 font-bold tracking-widest mt-2 uppercase">
-              Start Your Official Journey Here
+              Official International Placement Registration
             </p>
           </div>
-          <ApplicationForm />
+          {/* Mun saka cikakken ApplicationForm din a kasan page din ma domin saukin samu */}
+          <div className="max-w-5xl mx-auto">
+            <ApplicationForm />
+          </div>
         </div>
       </section>
 
-      {/* --- 8. FOOTER --- */}
+      {/* --- FOOTER --- */}
       <footer className="bg-white py-16 px-8 border-t-8 border-blue-900">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 items-center text-center md:text-left">
           <div>
