@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import { db } from "../lib/firebase";
+// Line 7 & 8 - Note the double dots to exit /apply AND /app
+import Navbar from "../../components/Navbar";
+import InternationalApplicationForm from "../../components/InternationalApplicationForm";
 import { collection, addDoc } from "firebase/firestore";
 
 export default function FlightBookingForm() {
