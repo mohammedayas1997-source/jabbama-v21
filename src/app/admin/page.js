@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase";
+import { db } from "../../lib/firebase";
 import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "../../lib/firebase";
 import { useRouter } from "next/navigation";
 
 export default function SuperAdminDashboard() {
