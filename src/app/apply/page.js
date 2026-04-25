@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { db, storage } from "@/lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-
+// Inside src/app/apply/page.js
+import InternationalApplicationForm from "@/components/InternationalApplicationForm";
 export default function InternationalApplicationForm() {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState({
