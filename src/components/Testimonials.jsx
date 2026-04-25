@@ -147,12 +147,13 @@ const initialComments = [
 export default function Testimonials() {
   const [comments, setComments] = useState(initialComments);
   const [newComment, setNewComment] = useState({ name: "", text: "" });
+  const [adminReply, setAdminReply] = useState({ id: null, text: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newComment.name && newComment.text) {
       const addedComment = {
-        id: comments.length + 1,
+        id: Date.now(),
         name: newComment.name,
         location: "Verified User",
         text: newComment.text,
@@ -163,8 +164,16 @@ export default function Testimonials() {
     }
   };
 
+  const handleAdminSubmitReply = (id) => {
+    if (!adminReply.text) return;
+    setComments(
+      comments.map((c) => (c.id === id ? { ...c, reply: adminReply.text } : c)),
+    );
+    setAdminReply({ id: null, text: "" });
+  };
+
   return (
-    <section className="py-24 bg-white px-8">
+    <section className="py-24 bg-gray-50 px-8">
       <div className="container mx-auto max-w-5xl">
         <div className="text-center mb-16">
           <h3 className="text-4xl font-black text-blue-900 uppercase italic">
@@ -173,81 +182,144 @@ export default function Testimonials() {
           <div className="w-20 h-2 bg-orange-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
-        {/* --- FORM DON RUBUTA COMMENT --- */}
-        <div className="bg-gray-50 p-8 rounded-[30px] mb-16 border-2 border-dashed border-slate-200">
-          <h4 className="text-xl font-black text-blue-900 mb-6 uppercase">
-            Leave a Comment
-          </h4>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              placeholder="Your Full Name"
-              className="w-full p-4 rounded-xl border-2 border-white focus:border-orange-500 outline-none shadow-sm font-bold"
-              value={newComment.name}
-              onChange={(e) =>
-                setNewComment({ ...newComment, name: e.target.value })
-              }
-            />
-            <textarea
-              placeholder="Share your experience with Jabbama Travels..."
-              className="w-full p-4 rounded-xl border-2 border-white focus:border-orange-500 outline-none shadow-sm font-bold h-32"
-              value={newComment.text}
-              onChange={(e) =>
-                setNewComment({ ...newComment, text: e.target.value })
-              }
-            ></textarea>
-            <button className="bg-blue-900 text-white px-8 py-4 rounded-xl font-black uppercase hover:bg-orange-600 transition shadow-lg">
-              Post Comment
-            </button>
-          </form>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* --- LEFT: FORM DON RUBUTA COMMENT --- */}
+          <div className="lg:col-span-1">
+            <div className="bg-white p-8 rounded-[30px] shadow-xl border-b-8 border-orange-500 sticky top-10">
+              <h4 className="text-xl font-black text-blue-900 mb-6 uppercase">
+                Leave a Comment
+              </h4>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Your Full Name"
+                  className="w-full p-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-orange-500 outline-none font-bold transition-all"
+                  value={newComment.name}
+                  onChange={(e) =>
+                    setNewComment({ ...newComment, name: e.target.value })
+                  }
+                />
+                <textarea
+                  placeholder="Share your experience..."
+                  className="w-full p-4 rounded-xl bg-gray-50 border-2 border-transparent focus:border-orange-500 outline-none font-bold h-32 transition-all"
+                  value={newComment.text}
+                  onChange={(e) =>
+                    setNewComment({ ...newComment, text: e.target.value })
+                  }
+                ></textarea>
+                <button className="w-full bg-blue-900 text-white py-4 rounded-xl font-black uppercase hover:bg-orange-600 transition shadow-lg">
+                  Post Comment
+                </button>
+              </form>
+            </div>
+          </div>
 
-        {/* --- LIST NA COMMENTS --- */}
-        <div className="space-y-8">
-          {comments.map((c) => (
-            <div key={c.id} className="group">
-              {/* User Comment */}
-              <div className="flex gap-4 items-start">
-                <div className="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center text-blue-900 font-black text-xl border-2 border-blue-200 flex-shrink-0">
-                  {c.name.charAt(0)}
-                </div>
-                <div className="flex-1 bg-white p-6 rounded-2xl rounded-tl-none shadow-sm border border-gray-100">
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-black text-blue-900 uppercase text-sm">
-                      {c.name}
-                    </h4>
-                    <span className="text-[10px] font-bold text-orange-500 uppercase tracking-widest bg-orange-50 px-2 py-1 rounded">
-                      {c.location}
-                    </span>
-                  </div>
-                  <p className="text-gray-700 font-medium text-sm leading-relaxed">
-                    {c.text}
-                  </p>
-                  <button className="mt-3 text-xs font-black text-slate-400 hover:text-blue-900 uppercase">
-                    Reply
-                  </button>
-                </div>
+          {/* --- RIGHT: SCROLLABLE COMMENT BOX --- */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-[40px] shadow-2xl border-2 border-gray-100 overflow-hidden">
+              <div className="bg-blue-900 p-6">
+                <h4 className="text-white font-black uppercase tracking-widest flex items-center gap-3">
+                  <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
+                  Live Discussions ({comments.length})
+                </h4>
               </div>
 
-              {/* Admin Reply */}
-              {c.reply && (
-                <div className="flex gap-4 items-start ml-16 mt-4">
-                  <div className="w-10 h-10 rounded-full bg-orange-500 flex items-center justify-center text-white font-black text-xs border-2 border-orange-200 flex-shrink-0">
-                    JT
+              {/* Akwatin Scroll */}
+              <div className="h-[600px] overflow-y-auto p-8 space-y-8 scrollbar-thin scrollbar-thumb-orange-500 scrollbar-track-gray-100">
+                {comments.map((c) => (
+                  <div
+                    key={c.id}
+                    className="border-b border-gray-100 pb-8 last:border-0"
+                  >
+                    {/* User Comment */}
+                    <div className="flex gap-4 items-start">
+                      <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-900 font-black border-2 border-blue-200 flex-shrink-0">
+                        {c.name.charAt(0)}
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex justify-between items-center mb-1">
+                          <h4 className="font-black text-blue-900 uppercase text-xs">
+                            {c.name}
+                          </h4>
+                          <span className="text-[9px] font-bold text-orange-500 uppercase bg-orange-50 px-2 py-1 rounded">
+                            {c.location}
+                          </span>
+                        </div>
+                        <p className="text-gray-700 font-medium text-sm leading-relaxed bg-gray-50 p-4 rounded-2xl rounded-tl-none">
+                          {c.text}
+                        </p>
+
+                        {/* Admin Action (Dashboard-style) */}
+                        <div className="mt-3 flex items-center gap-4">
+                          {!c.reply && (
+                            <button
+                              onClick={() =>
+                                setAdminReply({ id: c.id, text: "" })
+                              }
+                              className="text-[10px] font-black text-blue-600 hover:text-orange-600 uppercase transition"
+                            >
+                              [ Admin Reply ]
+                            </button>
+                          )}
+                        </div>
+
+                        {/* Admin Reply Input Area */}
+                        {adminReply.id === c.id && (
+                          <div className="mt-4 bg-orange-50 p-4 rounded-2xl border-2 border-orange-200">
+                            <textarea
+                              className="w-full p-3 rounded-xl border-none outline-none text-sm font-bold text-blue-900 bg-white shadow-inner h-20"
+                              placeholder="Write admin response..."
+                              value={adminReply.text}
+                              onChange={(e) =>
+                                setAdminReply({
+                                  ...adminReply,
+                                  text: e.target.value,
+                                })
+                              }
+                            ></textarea>
+                            <div className="flex justify-end gap-2 mt-2">
+                              <button
+                                onClick={() =>
+                                  setAdminReply({ id: null, text: "" })
+                                }
+                                className="px-3 py-1 text-[10px] font-black text-gray-500"
+                              >
+                                CANCEL
+                              </button>
+                              <button
+                                onClick={() => handleAdminSubmitReply(c.id)}
+                                className="px-4 py-1 bg-orange-600 text-white text-[10px] font-black rounded-lg"
+                              >
+                                SEND REPLY
+                              </button>
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Display Admin Reply */}
+                        {c.reply && (
+                          <div className="flex gap-3 items-start mt-4 ml-4 lg:ml-8">
+                            <div className="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center text-white font-black text-[10px] flex-shrink-0">
+                              JT
+                            </div>
+                            <div className="flex-1 bg-blue-50 p-4 rounded-2xl rounded-tl-none border-l-4 border-blue-900 shadow-sm">
+                              <h5 className="font-black text-blue-900 uppercase text-[9px] mb-1 flex items-center gap-2">
+                                Admin Reply{" "}
+                                <span className="text-blue-500">✓</span>
+                              </h5>
+                              <p className="text-blue-900 font-bold text-xs italic leading-snug">
+                                {c.reply}
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-1 bg-blue-50 p-5 rounded-2xl rounded-tl-none border-l-4 border-blue-900">
-                    <h4 className="font-black text-blue-900 uppercase text-[10px] mb-1">
-                      Jabbama Travels (Admin){" "}
-                      <span className="text-blue-500 ml-2">✓ Official</span>
-                    </h4>
-                    <p className="text-blue-900 font-bold text-sm italic">
-                      {c.reply}
-                    </p>
-                  </div>
-                </div>
-              )}
+                ))}
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </section>
