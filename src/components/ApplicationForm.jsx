@@ -1,265 +1,272 @@
 "use client";
 import React, { useState } from "react";
-import { db } from "../lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function ApplicationForm() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    homeAddress: "",
-    city: "",
-    state: "",
-    postalCode: "",
-    passportNumber: "",
-    targetCountry: "United Kingdom",
-    visaCategory: "Skilled Worker",
-  });
+  const [formData, setFormData] = useState({});
 
-  const [loading, setLoading] = useState(false);
-
-  // Function don tura bayani zuwa Firebase
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      // A nan zaka iya hada logic na Firebase Storage idan kana son adana files
-      await addDoc(collection(db, "travel_applications"), {
-        ...formData,
-        status: "Pending",
-        createdAt: serverTimestamp(),
-      });
-
-      alert(
-        "Application Submitted Successfully! Jabbama Team will contact you soon.",
-      );
-      e.target.reset();
-    } catch (error) {
-      console.error("Error submitting application: ", error);
-      alert("Error: Could not submit. Please check your connection.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
-    <section className="py-24 bg-white px-8" id="apply">
-      <div className="container mx-auto max-w-6xl">
-        <div className="bg-blue-900 rounded-[60px] shadow-2xl overflow-hidden flex flex-col lg:flex-row border-4 border-blue-900">
-          {/* Left Side: Branding */}
-          <div className="lg:w-1/4 bg-orange-500 p-12 text-white flex flex-col justify-between">
-            <div>
-              <h3 className="text-4xl font-black italic mb-6 leading-none uppercase">
-                Global Application Portal
-              </h3>
-              <p className="font-bold opacity-90 mb-8 border-l-4 border-blue-900 pl-4 text-sm">
-                Ensure all documents are clear and valid for faster processing.
-              </p>
-            </div>
-
-            <div className="space-y-6 font-black text-[10px] uppercase italic">
-              <div className="flex items-center gap-3 bg-blue-900/20 p-4 rounded-2xl text-xs">
-                <span>📍</span> 24/7 Support Available
-              </div>
-              <div className="flex items-center gap-3 bg-blue-900/20 p-4 rounded-2xl text-xs">
-                <span>📂</span> Secure Document Upload
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side: Form */}
-          <div className="lg:w-3/4 bg-white p-8 md:p-16">
-            <form onSubmit={handleSubmit} className="space-y-12">
-              {/* SECTION 1: Personal & Contact */}
-              <div>
-                <h4 className="text-blue-900 font-black text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                  <span className="w-8 h-8 bg-blue-900 text-white flex items-center justify-center rounded-full text-xs">
-                    01
-                  </span>
-                  Personal & Contact Information
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <div className="flex flex-col col-span-full lg:col-span-1">
-                    <label className="text-gray-400 font-bold text-[10px] uppercase mb-1 ml-2">
-                      Full Name
-                    </label>
-                    <input
-                      name="fullName"
-                      type="text"
-                      required
-                      onChange={handleChange}
-                      placeholder="Surname Firstname"
-                      className="bg-gray-50 p-4 rounded-2xl border-2 border-transparent focus:border-orange-500 outline-none transition font-bold text-blue-900"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-400 font-bold text-[10px] uppercase mb-1 ml-2">
-                      Email Address
-                    </label>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      onChange={handleChange}
-                      placeholder="name@domain.com"
-                      className="bg-gray-50 p-4 rounded-2xl border-2 border-transparent focus:border-orange-500 outline-none transition font-bold text-blue-900"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-400 font-bold text-[10px] uppercase mb-1 ml-2">
-                      Phone Number
-                    </label>
-                    <input
-                      name="phone"
-                      type="tel"
-                      required
-                      onChange={handleChange}
-                      placeholder="+234..."
-                      className="bg-gray-50 p-4 rounded-2xl border-2 border-transparent focus:border-orange-500 outline-none transition font-bold text-blue-900"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* SECTION 2: Travel Identity */}
-              <div>
-                <h4 className="text-blue-900 font-black text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                  <span className="w-8 h-8 bg-blue-900 text-white flex items-center justify-center rounded-full text-xs">
-                    02
-                  </span>
-                  Travel Identity & Destination
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div className="flex flex-col">
-                    <label className="text-gray-400 font-bold text-[10px] uppercase mb-1 ml-2">
-                      Passport Number
-                    </label>
-                    <input
-                      name="passportNumber"
-                      type="text"
-                      required
-                      onChange={handleChange}
-                      placeholder="A12345678"
-                      className="bg-gray-50 p-4 rounded-2xl border-2 border-transparent focus:border-orange-500 outline-none transition font-bold text-blue-900 uppercase"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-400 font-bold text-[10px] uppercase mb-1 ml-2">
-                      Target Country
-                    </label>
-                    <select
-                      name="targetCountry"
-                      onChange={handleChange}
-                      className="bg-gray-50 p-4 rounded-2xl border-2 border-transparent focus:border-orange-500 outline-none transition font-bold text-blue-900"
-                    >
-                      <option value="United Kingdom">United Kingdom</option>
-                      <option value="Canada">Canada</option>
-                      <option value="Australia">Australia</option>
-                      <option value="USA">USA</option>
-                      <option value="Japan">Japan</option>
-                      <option value="South Korea">South Korea</option>
-                    </select>
-                  </div>
-                  <div className="flex flex-col">
-                    <label className="text-gray-400 font-bold text-[10px] uppercase mb-1 ml-2">
-                      Visa Category
-                    </label>
-                    <select
-                      name="visaCategory"
-                      onChange={handleChange}
-                      className="bg-gray-50 p-4 rounded-2xl border-2 border-transparent focus:border-orange-500 outline-none transition font-bold text-blue-900"
-                    >
-                      <option value="Skilled Worker">Skilled Worker</option>
-                      <option value="Study Permit">Study Permit</option>
-                      <option value="Tourist Visa">Tourist Visa</option>
-                      <option value="Hajj & Umrah">Hajj & Umrah</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* SECTION 3: Document Uploads (SABUWAR KASHI) */}
-              <div>
-                <h4 className="text-blue-900 font-black text-sm uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
-                  <span className="w-8 h-8 bg-blue-900 text-white flex items-center justify-center rounded-full text-xs">
-                    03
-                  </span>
-                  Required Documents Upload
-                </h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-gray-50 p-8 rounded-[40px]">
-                  {/* Passport Photo */}
-                  <div className="flex flex-col">
-                    <label className="text-blue-900 font-black text-[10px] uppercase mb-2 ml-2">
-                      Passport Photograph (White Background)
-                    </label>
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-orange-500 file:text-white hover:file:bg-blue-900 transition cursor-pointer bg-white p-3 rounded-xl border border-dashed border-blue-200"
-                      required
-                    />
-                  </div>
-
-                  {/* International Passport */}
-                  <div className="flex flex-col">
-                    <label className="text-blue-900 font-black text-[10px] uppercase mb-2 ml-2">
-                      International Passport (Data Page)
-                    </label>
-                    <input
-                      type="file"
-                      accept="image/*,.pdf"
-                      className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-orange-500 file:text-white hover:file:bg-blue-900 transition cursor-pointer bg-white p-3 rounded-xl border border-dashed border-blue-200"
-                      required
-                    />
-                  </div>
-
-                  {/* CV / Resume */}
-                  <div className="flex flex-col">
-                    <label className="text-blue-900 font-black text-[10px] uppercase mb-2 ml-2">
-                      Updated CV / Resume
-                    </label>
-                    <input
-                      type="file"
-                      accept=".pdf,.doc,.docx"
-                      className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-orange-500 file:text-white hover:file:bg-blue-900 transition cursor-pointer bg-white p-3 rounded-xl border border-dashed border-blue-200"
-                      required
-                    />
-                  </div>
-
-                  {/* Other Documents */}
-                  <div className="flex flex-col">
-                    <label className="text-blue-900 font-black text-[10px] uppercase mb-2 ml-2">
-                      Other Supporting Documents (Credentials)
-                    </label>
-                    <input
-                      type="file"
-                      multiple
-                      className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-orange-500 file:text-white hover:file:bg-blue-900 transition cursor-pointer bg-white p-3 rounded-xl border border-dashed border-blue-200"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className={`w-full ${loading ? "bg-gray-400" : "bg-blue-900 hover:bg-orange-600"} text-white py-6 rounded-[30px] font-black text-xl transition shadow-2xl mt-6 uppercase italic tracking-tighter`}
-              >
-                {loading
-                  ? "Uploading Data..."
-                  : "Finalize & Submit Application"}
-              </button>
-            </form>
-          </div>
+    <div className="bg-white shadow-2xl rounded-[40px] overflow-hidden border border-gray-200">
+      {/* HEADER SECTION */}
+      <div className="bg-[#003366] p-8 text-white text-center relative">
+        <div className="absolute top-4 right-8 text-xs font-mono opacity-70">
+          Ref No: JTT/INTL/2026/__________
         </div>
+        <h1 className="text-3xl md:text-4xl font-black tracking-tighter uppercase italic">
+          JABBAMA TRAVELS AND TOURS
+        </h1>
+        <p className="text-orange-400 font-bold tracking-widest text-sm mb-4">
+          Your Gateway to Global Opportunities
+        </p>
+        <div className="bg-white text-[#003366] inline-block px-6 py-2 rounded-full font-black text-xl shadow-lg uppercase">
+          International Job Placement Form
+        </div>
+        <p className="mt-4 text-[10px] text-red-400 font-bold uppercase tracking-widest">
+          IMPORTANT: Please complete this form in BLOCK LETTERS. Ensure all
+          information is accurate.
+        </p>
       </div>
-    </section>
+
+      <form className="p-6 md:p-10 space-y-8">
+        {/* PAYMENT INFORMATION */}
+        <section className="bg-orange-50 border-2 border-orange-200 rounded-3xl p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">💰</span>
+            <h3 className="font-black text-[#003366] uppercase tracking-tight">
+              Payment Information
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <label className="block text-[10px] font-black text-slate-500 uppercase">
+                Application Fee
+              </label>
+              <input
+                type="text"
+                value="₦50,000 (Non-Refundable)"
+                disabled
+                className="w-full bg-transparent border-b-2 border-orange-300 py-2 font-bold text-blue-900"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-slate-500 uppercase">
+                Payment Ref/Receipt No
+              </label>
+              <input
+                type="text"
+                name="paymentRef"
+                className="w-full border-b-2 border-orange-300 py-2 focus:outline-none focus:border-blue-900 transition"
+                placeholder="Enter Reference"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-slate-500 uppercase">
+                Upload Receipt (Screenshot)
+              </label>
+              <input type="file" className="w-full text-xs mt-2" />
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION A: PERSONAL DATA */}
+        <section className="border-2 border-blue-100 rounded-3xl p-6">
+          <div className="bg-blue-900 text-white px-4 py-1 inline-block rounded-lg text-sm font-black mb-6 uppercase">
+            Section A: Personal Data
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2">
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Full Name (As seen on Passport)
+              </label>
+              <input
+                type="text"
+                className="w-full border-b border-slate-300 py-2 focus:border-blue-900 outline-none uppercase font-bold"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Date of Birth
+              </label>
+              <input
+                type="date"
+                className="w-full border-b border-slate-300 py-2 focus:border-blue-900 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Place of Birth
+              </label>
+              <input
+                type="text"
+                className="w-full border-b border-slate-300 py-2 focus:border-blue-900 outline-none"
+              />
+            </div>
+            <div className="flex gap-4">
+              <label className="text-[10px] font-black text-slate-400 uppercase w-full">
+                Gender:
+                <select className="block w-full border-b border-slate-300 py-2 font-bold outline-none">
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </label>
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Marital Status
+              </label>
+              <input
+                type="text"
+                className="w-full border-b border-slate-300 py-2 focus:border-blue-900 outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                International Passport No
+              </label>
+              <input
+                type="text"
+                className="w-full border-b border-slate-300 py-2 focus:border-blue-900 outline-none uppercase"
+              />
+            </div>
+            <div>
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Passport Expiry Date
+              </label>
+              <input
+                type="date"
+                className="w-full border-b border-slate-300 py-2 focus:border-blue-900 outline-none"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Upload International Passport (Data Page)
+              </label>
+              <input
+                type="file"
+                className="w-full text-xs mt-2 border border-dashed border-blue-300 p-4 rounded-xl bg-blue-50"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION B: ACADEMIC & PROFESSIONAL */}
+        <section className="border-2 border-blue-100 rounded-3xl p-6">
+          <div className="bg-blue-900 text-white px-4 py-1 inline-block rounded-lg text-sm font-black mb-6 uppercase">
+            Section B: Academic & Professional Profile
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:col-span-2 flex flex-wrap gap-4 border-b pb-4">
+              <span className="text-[10px] font-black text-slate-400 uppercase w-full">
+                Highest Qualification:
+              </span>
+              {[
+                "SSCE",
+                "ND",
+                "HND",
+                "Bachelor's Degree",
+                "Master's",
+                "Vocational",
+              ].map((q) => (
+                <label
+                  key={q}
+                  className="flex items-center gap-2 text-xs font-bold text-blue-900"
+                >
+                  <input type="checkbox" className="accent-blue-900" /> {q}
+                </label>
+              ))}
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Upload Academic Certificates (Merge all in one PDF)
+              </label>
+              <input
+                type="file"
+                className="w-full text-xs mt-2 border border-dashed border-blue-300 p-4 rounded-xl bg-blue-50"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION C: PREFERENCE & ELIGIBILITY */}
+        <section className="border-2 border-blue-100 rounded-3xl p-6 bg-slate-50">
+          <div className="bg-blue-900 text-white px-4 py-1 inline-block rounded-lg text-sm font-black mb-6 uppercase">
+            Section C: Preference & Eligibility
+          </div>
+          <div className="space-y-6">
+            <div>
+              <label className="block text-[10px] font-black text-slate-400 uppercase mb-3">
+                Target Destination (Select Priority):
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {[
+                  "Tier 1: UK / Canada / USA / Australia",
+                  "Asia: Japan / South Korea",
+                  "Middle East: UAE / Qatar / Saudi Arabia",
+                  "Europe: Schengen Zone",
+                ].map((d) => (
+                  <label
+                    key={d}
+                    className="flex items-center gap-2 text-xs font-bold p-3 bg-white border rounded-xl hover:border-orange-500 cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="destination"
+                      className="accent-orange-500"
+                    />{" "}
+                    {d}
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SECTION F: DECLARATION */}
+        <section className="border-4 border-red-100 rounded-3xl p-6 bg-red-50/30">
+          <div className="bg-red-600 text-white px-4 py-1 inline-block rounded-lg text-sm font-black mb-6 uppercase">
+            Section F: Declaration & Terms
+          </div>
+          <p className="text-[11px] leading-relaxed font-bold text-slate-700 italic">
+            I, ________________________________, hereby certify that all
+            information provided is true. I understand that any false
+            declaration may lead to automatic disqualification without a refund.
+            I also authorize JABBAMA TRAVELS AND TOURS to process my data for
+            the purpose of job placement and visa application.
+          </p>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="border-b-2 border-slate-400 py-4">
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Applicant Signature (Upload or Sign)
+              </label>
+              <input type="file" className="mt-2 text-xs" />
+            </div>
+            <div className="border-b-2 border-slate-400 py-4">
+              <label className="block text-[10px] font-black text-slate-400 uppercase">
+                Date
+              </label>
+              <input
+                type="date"
+                className="w-full bg-transparent outline-none"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* SUBMIT BUTTON */}
+        <button className="w-full bg-[#003366] hover:bg-orange-600 text-white py-6 rounded-[25px] font-black text-2xl shadow-2xl transition-all transform hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-4">
+          SUBMIT OFFICIAL APPLICATION <span>🚀</span>
+        </button>
+      </form>
+
+      {/* FOOTER INFO */}
+      <div className="bg-slate-100 p-6 flex flex-wrap justify-between items-center text-[10px] font-black text-slate-500 uppercase tracking-widest border-t">
+        <p>Address: Block C 14/15 Yan Musa Plaza, Ring Road, Kano State.</p>
+        <p>Hotlines: 09022064702 / 07047497491</p>
+      </div>
+    </div>
   );
 }

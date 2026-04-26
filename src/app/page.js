@@ -12,6 +12,7 @@ export default function Home() {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [isAppModalOpen, setIsAppModalOpen] = useState(false);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+  const [isFlightFormOpen, setIsFlightFormOpen] = useState(false);
 
   const heroImages = [
     "/assets/hero1.jpg",
@@ -120,14 +121,22 @@ export default function Home() {
       <Navbar />
 
       {/* --- 2. HERO SECTION --- */}
-      <header className="relative min-h-[95vh] flex items-center bg-white overflow-hidden py-16 px-4 md:px-12">
-        {/* Background Gradient Decoration */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/80 via-transparent to-transparent z-0"></div>
+      <header className="relative min-h-[95vh] flex items-center bg-[#f8fafc] overflow-hidden py-16 px-4 md:px-12">
+        {/* BACKGROUND DECORATION - Mai haske da launuka masu sanyi */}
+        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
+          {/* Babban gradient mai haske */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-orange-50/30"></div>
+
+          {/* Wasu "Blurry Blobs" don ƙara kyan background ɗin (Optional) */}
+          <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-100/50 rounded-full blur-[100px]"></div>
+          <div className="absolute top-1/2 -right-24 w-80 h-80 bg-orange-100/40 rounded-full blur-[100px]"></div>
+        </div>
 
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* TEXT CONTENT WITH GLASS BACKGROUND */}
-          <div className="relative z-20 text-left space-y-8 p-6 md:p-12 rounded-[50px] bg-white/30 backdrop-blur-md border border-white/50 shadow-2xl lg:shadow-none lg:bg-transparent lg:backdrop-blur-none lg:border-none transition-all">
-            <div className="inline-flex items-center gap-3 bg-orange-100 border border-orange-200 text-orange-600 px-6 py-2 rounded-full font-black text-[10px] tracking-[0.3em] uppercase shadow-sm">
+          {/* Na ƙara 'bg-white/40' da 'shadow-slate-200/50' don hasken ya fi fitowa */}
+          <div className="relative z-20 text-left space-y-8 p-6 md:p-12 rounded-[50px] bg-white/40 backdrop-blur-xl border border-white/60 shadow-2xl lg:shadow-none lg:bg-transparent lg:backdrop-blur-none lg:border-none transition-all">
+            <div className="inline-flex items-center gap-3 bg-orange-100/80 border border-orange-200 text-orange-600 px-6 py-2 rounded-full font-black text-[10px] tracking-[0.3em] uppercase shadow-sm">
               <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
@@ -152,7 +161,7 @@ export default function Home() {
 
             <p className="text-lg md:text-2xl font-bold text-slate-700 max-w-xl leading-snug">
               Your gateway to the world. We provide{" "}
-              <span className="text-blue-900 underline decoration-orange-500 decoration-4 underline-offset-4">
+              <span className="text-blue-900 underline decoration-orange-500 decoration-4 underline-offset-4 font-black">
                 professional visa assistance
               </span>
               , work permits, and global travel solutions with integrity.
@@ -161,7 +170,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-5 pt-4">
               <button
                 onClick={() => setIsAppModalOpen(true)}
-                className="bg-blue-900 hover:bg-orange-600 text-white px-12 py-6 rounded-[28px] font-black text-xl transition-all hover:scale-105 shadow-[0_20px_50px_rgba(30,58,138,0.4)] flex items-center gap-4 group"
+                className="bg-blue-900 hover:bg-orange-600 text-white px-12 py-6 rounded-[28px] font-black text-xl transition-all hover:scale-105 shadow-[0_20px_50px_rgba(30,58,138,0.3)] flex items-center gap-4 group"
               >
                 START APPLICATION
                 <span className="group-hover:translate-x-2 transition-transform duration-300">
@@ -169,13 +178,13 @@ export default function Home() {
                 </span>
               </button>
 
-              <button className="bg-white border-4 border-blue-900 text-blue-900 px-10 py-5 rounded-[28px] font-black text-xl hover:bg-blue-900 hover:text-white transition-all shadow-xl active:scale-95">
+              <button className="bg-white border-4 border-blue-900 text-blue-900 px-10 py-5 rounded-[28px] font-black text-xl hover:bg-blue-900 hover:text-white transition-all shadow-lg active:scale-95">
                 OUR SERVICES
               </button>
             </div>
 
-            {/* Quick Stats / Trust Badges */}
-            <div className="flex items-center gap-10 pt-10 border-t border-slate-200 mt-4">
+            {/* Trust Badges */}
+            <div className="flex items-center gap-10 pt-10 border-t border-slate-200/60 mt-4">
               <div className="flex flex-col">
                 <span className="font-black text-blue-900 text-3xl">IATA</span>
                 <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
@@ -191,7 +200,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
           {/* IMAGE SLIDER */}
           <div className="relative h-[600px] md:h-[750px] w-full rounded-[70px] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)] border-[12px] border-white group">
             {heroImages.map((img, idx) => (
@@ -295,7 +303,41 @@ export default function Home() {
               Instant Domestic & International Booking
             </p>
           </div>
-          <FlightBookingForm />
+
+          <div className="flex flex-col items-center">
+            {!isFlightFormOpen ? (
+              /* BUTTON DA ZAI NUNA KAFIN A BUDE FORM */
+              <button
+                onClick={() => setIsFlightFormOpen(true)}
+                className="group relative bg-white border-4 border-blue-900 text-blue-900 px-12 py-6 rounded-[30px] font-black text-xl hover:bg-blue-900 hover:text-white transition-all shadow-xl flex items-center gap-4 overflow-hidden"
+              >
+                <span className="relative z-10 uppercase tracking-tighter">
+                  Book a Flight Now
+                </span>
+                <span className="text-2xl group-hover:rotate-45 transition-transform duration-300">
+                  ✈️
+                </span>
+
+                {/* Subtle glow effect on hover */}
+                <div className="absolute inset-0 bg-blue-900 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 -z-0"></div>
+              </button>
+            ) : (
+              /* FORM DIN DA ZAI FITO BAYAN AN DANNA BUTTON */
+              <div className="w-full max-w-5xl animate-in fade-in slide-in-from-bottom-10 duration-700">
+                <div className="flex justify-end mb-4">
+                  <button
+                    onClick={() => setIsFlightFormOpen(false)}
+                    className="text-red-600 font-black text-sm uppercase hover:underline flex items-center gap-2"
+                  >
+                    Close Form ✕
+                  </button>
+                </div>
+                <div className="bg-white p-2 rounded-[40px] shadow-2xl border border-blue-100">
+                  <FlightBookingForm />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
