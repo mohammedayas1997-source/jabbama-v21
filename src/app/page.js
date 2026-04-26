@@ -121,39 +121,42 @@ export default function Home() {
       <Navbar />
 
       {/* --- 2. HERO SECTION --- */}
-      <header className="relative min-h-[95vh] flex items-center bg-[#f8fafc] overflow-hidden py-16 px-4 md:px-12">
-        {/* BACKGROUND DECORATION - Mai haske da launuka masu sanyi */}
+      <header className="relative min-h-[95vh] flex items-center bg-[#e0f2fe] overflow-hidden py-16 px-4 md:px-12">
+        {/* BACKGROUND DECORATION - Sky Blue Theme */}
         <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-          {/* Babban gradient mai haske */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-orange-50/30"></div>
+          {/* Gradient mai haske daga Sky Blue zuwa Fari */}
+          <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-white to-sky-50"></div>
 
-          {/* Wasu "Blurry Blobs" don ƙara kyan background ɗin (Optional) */}
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-100/50 rounded-full blur-[100px]"></div>
-          <div className="absolute top-1/2 -right-24 w-80 h-80 bg-orange-100/40 rounded-full blur-[100px]"></div>
+          {/* Soft Animated Clouds/Blobs */}
+          <div className="absolute -top-24 -left-24 w-[600px] h-[600px] bg-sky-300/30 rounded-full blur-[120px] animate-pulse"></div>
+          <div className="absolute top-1/3 -right-24 w-[500px] h-[500px] bg-blue-200/40 rounded-full blur-[120px]"></div>
+
+          {/* Subtle Airplane Trail Pattern */}
+          <div className="absolute inset-0 opacity-[0.05] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
         </div>
 
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* TEXT CONTENT WITH GLASS BACKGROUND */}
-          {/* Na ƙara 'bg-white/40' da 'shadow-slate-200/50' don hasken ya fi fitowa */}
-          <div className="relative z-20 text-left space-y-8 p-6 md:p-12 rounded-[50px] bg-white/40 backdrop-blur-xl border border-white/60 shadow-2xl lg:shadow-none lg:bg-transparent lg:backdrop-blur-none lg:border-none transition-all">
-            <div className="inline-flex items-center gap-3 bg-orange-100/80 border border-orange-200 text-orange-600 px-6 py-2 rounded-full font-black text-[10px] tracking-[0.3em] uppercase shadow-sm">
+          {/* An gyara shi ya koma haske mai kyan gani (Frosty Glass) */}
+          <div className="relative z-20 text-left space-y-8 p-6 md:p-12 rounded-[50px] bg-white/60 backdrop-blur-xl border border-white shadow-[0_30px_60px_rgba(186,230,253,0.5)] lg:shadow-none lg:bg-transparent lg:backdrop-blur-none lg:border-none transition-all">
+            <div className="inline-flex items-center gap-3 bg-sky-200/50 border border-sky-300 text-sky-700 px-6 py-2 rounded-full font-black text-[10px] tracking-[0.3em] uppercase shadow-sm">
               <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-orange-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
               </span>
               Official Travel Partner
             </div>
 
             <div className="space-y-4">
-              <h1 className="text-7xl md:text-[110px] font-black italic text-blue-900 leading-[0.8] tracking-tighter drop-shadow-xl">
+              <h1 className="text-7xl md:text-[110px] font-black italic text-blue-900 leading-[0.8] tracking-tighter drop-shadow-lg">
                 JABBAMA <br />
-                <span className="text-orange-500 not-italic inline-block transform -rotate-1">
+                <span className="text-orange-500 not-italic inline-block transform -rotate-1 drop-shadow-md">
                   TRAVELS
                 </span>
               </h1>
               <div className="flex items-center gap-4 pt-2">
                 <div className="h-[4px] w-24 bg-orange-500 rounded-full"></div>
-                <h2 className="text-lg md:text-2xl font-black tracking-[0.3em] text-slate-500 uppercase">
+                <h2 className="text-lg md:text-2xl font-black tracking-[0.3em] text-sky-800/70 uppercase">
                   Travels and Tours Limited
                 </h2>
               </div>
@@ -170,7 +173,7 @@ export default function Home() {
             <div className="flex flex-wrap gap-5 pt-4">
               <button
                 onClick={() => setIsAppModalOpen(true)}
-                className="bg-blue-900 hover:bg-orange-600 text-white px-12 py-6 rounded-[28px] font-black text-xl transition-all hover:scale-105 shadow-[0_20px_50px_rgba(30,58,138,0.3)] flex items-center gap-4 group"
+                className="bg-blue-900 hover:bg-orange-600 text-white px-12 py-6 rounded-[28px] font-black text-xl transition-all hover:scale-105 shadow-[0_20px_50px_rgba(12,74,110,0.3)] flex items-center gap-4 group"
               >
                 START APPLICATION
                 <span className="group-hover:translate-x-2 transition-transform duration-300">
@@ -180,29 +183,30 @@ export default function Home() {
 
               <button
                 onClick={() => setIsServiceModalOpen(true)}
-                className="bg-transparent border-4 border-white text-white px-10 py-5 rounded-[28px] font-black text-xl hover:bg-white hover:text-blue-900 transition-all shadow-lg active:scale-95"
+                className="bg-white border-4 border-blue-900 text-blue-900 px-10 py-5 rounded-[28px] font-black text-xl hover:bg-blue-900 hover:text-white transition-all shadow-lg active:scale-95"
               >
                 OUR SERVICES
               </button>
             </div>
 
             {/* Trust Badges */}
-            <div className="flex items-center gap-10 pt-10 border-t border-slate-200/60 mt-4">
+            <div className="flex items-center gap-10 pt-10 border-t border-sky-200 mt-4">
               <div className="flex flex-col">
                 <span className="font-black text-blue-900 text-3xl">IATA</span>
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                <span className="text-[10px] font-black uppercase tracking-widest text-sky-600">
                   Certified Agency
                 </span>
               </div>
-              <div className="w-[2px] h-12 bg-slate-200"></div>
+              <div className="w-[2px] h-12 bg-sky-200"></div>
               <div className="flex flex-col">
                 <span className="font-black text-blue-900 text-3xl">24/7</span>
-                <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">
+                <span className="text-[10px] font-black uppercase tracking-widest text-sky-600">
                   Expert Support
                 </span>
               </div>
             </div>
           </div>
+
           {/* IMAGE SLIDER */}
           <div className="relative h-[600px] md:h-[750px] w-full rounded-[70px] overflow-hidden shadow-[0_50px_100px_rgba(0,0,0,0.2)] border-[12px] border-white group">
             {heroImages.map((img, idx) => (
