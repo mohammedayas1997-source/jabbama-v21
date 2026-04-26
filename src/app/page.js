@@ -13,7 +13,7 @@ export default function Home() {
   const [isAppModalOpen, setIsAppModalOpen] = useState(false);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const [isFlightFormOpen, setIsFlightFormOpen] = useState(false);
-
+  const [isServiceModalOpen, setIsServiceModalOpen] = useState(false);
   const heroImages = [
     "/assets/hero1.jpg",
     "/assets/hero2.jpg",
@@ -178,7 +178,10 @@ export default function Home() {
                 </span>
               </button>
 
-              <button className="bg-white border-4 border-blue-900 text-blue-900 px-10 py-5 rounded-[28px] font-black text-xl hover:bg-blue-900 hover:text-white transition-all shadow-lg active:scale-95">
+              <button
+                onClick={() => setIsServiceModalOpen(true)}
+                className="bg-transparent border-4 border-white text-white px-10 py-5 rounded-[28px] font-black text-xl hover:bg-white hover:text-blue-900 transition-all shadow-lg active:scale-95"
+              >
                 OUR SERVICES
               </button>
             </div>
@@ -345,6 +348,121 @@ export default function Home() {
       <section id="study-abroad" className="py-12 bg-white">
         <StudyAbroadPortal />
       </section>
+
+      {/* --- SERVICES MODAL --- */}
+      {isServiceModalOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          {/* Overlay */}
+          <div
+            className="absolute inset-0 bg-slate-950/90 backdrop-blur-md"
+            onClick={() => setIsServiceModalOpen(false)}
+          ></div>
+
+          {/* Content */}
+          <div className="relative bg-white w-full max-w-5xl max-h-[90vh] overflow-y-auto rounded-[40px] shadow-2xl animate-in zoom-in duration-300">
+            {/* Header */}
+            <div className="sticky top-0 bg-white border-b p-8 flex justify-between items-center z-10">
+              <div>
+                <h2 className="text-3xl font-black text-blue-900 italic uppercase">
+                  Our Professional Services
+                </h2>
+                <p className="text-orange-500 font-bold text-sm tracking-widest uppercase">
+                  Expert Solutions for Your Global Journey
+                </p>
+              </div>
+              <button
+                onClick={() => setIsServiceModalOpen(false)}
+                className="bg-red-100 text-red-600 p-3 rounded-full hover:bg-red-600 hover:text-white transition-all"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={3}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* Services Grid */}
+            <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {[
+                {
+                  title: "Visa Assistance",
+                  icon: "🌍",
+                  desc: "Muna taimakawa wajen neman kowane nau'in visa (Visit, Study, ko Business) tare da tabbatar da cewa dukkan takardunka sun cika ka'ida don samun nasara.",
+                  color: "blue",
+                },
+                {
+                  title: "International Job Placement",
+                  icon: "💼",
+                  desc: "Hada kwararrun ma'aikata da kamfanoni a kasashen waje kamar UK, Canada, da Middle East. Muna kula da dukkan tsarin daukar aiki da takardun aiki.",
+                  color: "orange",
+                },
+                {
+                  title: "Flight Reservations",
+                  icon: "✈️",
+                  desc: "Yanke tikitin jirgi na gida da na kasashen waje akan farashi mai sauki. Muna taimakawa wajen zabar jirgin da ya fi dacewa da lokacinka.",
+                  color: "blue",
+                },
+                {
+                  title: "Study Abroad Programs",
+                  icon: "🎓",
+                  desc: "Neman gurbin karatu a manyan jami'o'in duniya. Muna taimakawa dalibai wajen samun admission da kuma visa ta karatu cikin sauki.",
+                  color: "orange",
+                },
+                {
+                  title: "Hajj & Umrah Packages",
+                  icon: "🕋",
+                  desc: "Shirye-shiryen ibada na musamman tare da masauki kusa da Haramain, sufuri mai dadi, da jagoranci na gari don gudanar da ibada cikin kwanciyar hankali.",
+                  color: "blue",
+                },
+                {
+                  title: "Passport Documentation",
+                  icon: "📑",
+                  desc: "Taimakawa wajen sabunta fasfo ko neman sabo, tare da gyara dukkan matsalolin da suka shafi takardun zama dan kasa ko tafiye-tafiye.",
+                  color: "orange",
+                },
+              ].map((service, index) => (
+                <div
+                  key={index}
+                  className="group p-8 rounded-[35px] bg-slate-50 border-2 border-transparent hover:border-blue-900 hover:bg-white transition-all duration-300 shadow-sm hover:shadow-xl"
+                >
+                  <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">
+                    {service.icon}
+                  </div>
+                  <h3 className="text-xl font-black text-blue-900 uppercase mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-slate-600 font-medium leading-relaxed">
+                    {service.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer Button */}
+            <div className="p-8 bg-slate-50 text-center">
+              <button
+                onClick={() => {
+                  setIsServiceModalOpen(false);
+                  setIsAppModalOpen(true);
+                }}
+                className="bg-blue-900 text-white px-10 py-5 rounded-2xl font-black hover:bg-orange-600 transition-all shadow-xl"
+              >
+                READY TO START? APPLY NOW
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* --- JOBS ABROAD SECTION --- */}
       <section className="py-24 bg-blue-900 px-8 relative">
