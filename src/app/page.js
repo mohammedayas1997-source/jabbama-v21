@@ -394,44 +394,43 @@ export default function Home() {
                 </svg>
               </button>
             </div>
-
             {/* Services Grid */}
             <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
               {[
                 {
                   title: "Visa Assistance",
                   icon: "🌍",
-                  desc: "Muna taimakawa wajen neman kowane nau'in visa (Visit, Study, ko Business) tare da tabbatar da cewa dukkan takardunka sun cika ka'ida don samun nasara.",
+                  desc: "Comprehensive support for all visa categories including Visit, Study, and Business visas. We ensure your documentation meets all regulatory requirements for maximum success.",
                   color: "blue",
                 },
                 {
                   title: "International Job Placement",
                   icon: "💼",
-                  desc: "Hada kwararrun ma'aikata da kamfanoni a kasashen waje kamar UK, Canada, da Middle East. Muna kula da dukkan tsarin daukar aiki da takardun aiki.",
+                  desc: "Connecting skilled professionals with top-tier employers across the UK, Canada, and the Middle East. We manage the entire recruitment process and work permit documentation.",
                   color: "orange",
                 },
                 {
                   title: "Flight Reservations",
                   icon: "✈️",
-                  desc: "Yanke tikitin jirgi na gida da na kasashen waje akan farashi mai sauki. Muna taimakawa wajen zabar jirgin da ya fi dacewa da lokacinka.",
+                  desc: "Instant booking for domestic and international flights at competitive rates. We help you choose the best routes and airlines that fit your schedule and budget.",
                   color: "blue",
                 },
                 {
                   title: "Study Abroad Programs",
                   icon: "🎓",
-                  desc: "Neman gurbin karatu a manyan jami'o'in duniya. Muna taimakawa dalibai wajen samun admission da kuma visa ta karatu cikin sauki.",
+                  desc: "Facilitating admissions into prestigious global universities. We provide end-to-end guidance from university selection to successful student visa procurement.",
                   color: "orange",
                 },
                 {
                   title: "Hajj & Umrah Packages",
                   icon: "🕋",
-                  desc: "Shirye-shiryen ibada na musamman tare da masauki kusa da Haramain, sufuri mai dadi, da jagoranci na gari don gudanar da ibada cikin kwanciyar hankali.",
+                  desc: "Premium spiritual travel packages featuring close proximity to the Holy Sites, comfortable transportation, and expert guided services for a seamless pilgrimage.",
                   color: "blue",
                 },
                 {
                   title: "Passport Documentation",
                   icon: "📑",
-                  desc: "Taimakawa wajen sabunta fasfo ko neman sabo, tare da gyara dukkan matsalolin da suka shafi takardun zama dan kasa ko tafiye-tafiye.",
+                  desc: "Expert assistance with new passport applications, renewals, and data correction. We streamline the process to ensure your travel documents are ready on time.",
                   color: "orange",
                 },
               ].map((service, index) => (
@@ -467,7 +466,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
       {/* --- JOBS ABROAD SECTION --- */}
       <section className="py-24 bg-blue-900 px-8 relative">
         <div className="container mx-auto">
